@@ -1,70 +1,116 @@
-" Settings
+"--------------------------------------------------------------
+" .vimrc
+"--------------------------------------------------------------
+
+"--------------------------------------------------------------
+" Behavior
+"--------------------------------------------------------------
+set nocompatible        " Do not act overly VI-compatible
+
+syntax on		        " Highlight syntax
+filetype plugin indent on
+set incsearch		    " Display matches as you write the pattern
+set hlsearch		    " Highlight matches
+set ignorecase          " Search ignores case
+set smartcase           " Ignore 'ignorecase' if pattern contains capitals
+
+set autoread		    " Automatically read a file that was changed outside vim
+set hidden		        " Do not unload a buffer when no longer shown in a window
+set wildmenu		    " Display options when pressing tab on command line
+			            " e.g. :color <tab> USETHIS
+set whichwrap=h,l,[,],~ " list of flags specifying which commands wrap to another line
+set scrolloff=5         " Show 5 lines above and below cursor
+                        " - e.g. when scrolling below screen edge
+set nojoinspaces        " Do not add spaces after . when joining lines
+set linebreak           " Break lines at 'breakat' chars
+"set brk=\ \    !@*-+;:,./? " Characters to break line at
+set laststatus=2        " When to use status line for the last window
+
+"--------------------------------------------------------------
+" GUI related
+"--------------------------------------------------------------
+set guioptions-=T                    " TODO
+set grepprg=grep\ -nH\ $*\ /dev/null " program used for the ":grep" command
+set guifont=Andale\ Mono\ 12         " TODO
+
+"--------------------------------------------------------------
+" Tags
+"--------------------------------------------------------------
 let Tlist_WinWidth = 40
 let Tlist_Sort_Type = "name"
 let g:tex_flavor = "latex"
 
-set grepprg=grep\ -nH\ $*\ /dev/null
-set guifont=Andale\ Mono\ 12
-set guioptions-=T
-set incsearch
-set laststatus=2
-set linebreak
-set nocompatible
-set nojoinspaces
-set shiftwidth=4
-set smartcase
-set softtabstop=4
-set tabstop=8
-set scrolloff=3
-set whichwrap=h,l,[,],~
-set wildmenu
-set printdevice=black
-set hidden
-set hlsearch
-set autoread
+"--------------------------------------------------------------
+" Look - colors etc.
+"--------------------------------------------------------------
+set t_Co=256        " 256 colors
+colorscheme wombat256 " Use colorscheme called wombat
+			        " Put scheme.vim in ~/.vim/colors
 
-syntax on
+"--------------------------------------------------------------
+" Text formatting
+"--------------------------------------------------------------
 
-colorscheme wombat
+set expandtab		    " Convert tabs to spaces
+set shiftwidth=4	    " number of spaces used for each step of (auto)indent
+set tabstop=4           " number of spaces a <Tab> in the text stands for
+set softtabstop=4       " if non-zero, number of spaces to insert for a <Tab>
 
-" Show the syntastic status flag in status line
-set statusline=%<%f\ %#errormsg#%{SyntasticStatuslineFlag()}%*%h%m%r%=%-14.(%l,%c%V%)\ %P
+"--------------------------------------------------------------
+" Status line
+"--------------------------------------------------------------
+" name, encoding, changed, content, errorflag, col#, line#/len
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%<\ %#errormsg#%{SyntasticStatuslineFlag()}%*%h%m%r%y%=%c,%l/%L\ %P
 
-" Mappings
-noremap <Space> <PageDown>
-noremap j gj
-noremap k gk
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
-noremap <F1> :Rake<CR>
-noremap <silent> <F2> :NERDTreeToggle<CR>
-nnoremap <silent> <C-h> :bprevious<CR>
-nnoremap <silent> <C-l> :bnext<CR>
-nnoremap <C-pagedown> <C-w>w
-nnoremap <C-pageup> <C-w>W
-nnoremap <silent> <F8> :TlistToggle<CR>
-nnoremap <Space> i<Space><Esc>
-" mappings to search for the highlighted word when pressing * or # in visual mode
-vnoremap * <Esc>/<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
-vnoremap # <Esc>?<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
+"--------------------------------------------------------------
+" Textwidths for different filetypes
+"--------------------------------------------------------------
+autocmd FileType ruby set sw=4  " Shiftwidth (# spaces for each step of autoident)
+autocmd FileType ruby set tw=4
 
-filetype plugin indent on
+autocmd FileType tex set tw=70
 
-" Highlight EOL whitespace, stolen from https://github.com/bronson/vim-trailing-whitespace
-" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+autocmd FileType python set sw=4
+autocmd FileType python set tw=110
+
+"--------------------------------------------------------------
+" \\Highlight trailing whitespaces
+"--------------------------------------------------------------
 highlight ExtraWhitespace ctermbg=darkred guibg=#382424
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 " the above flashes annoyingly while typing, be calmer in insert mode
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
+" Related to bugfixing
 autocmd BufReadPost quickfix set cursorline
-autocmd FileType ruby set sw=2
-autocmd FileType tex set tw=70
-autocmd FileType python set tw=110
-autocmd BufRead testcases.txt syntax match DiffAdd /Test types: .*/
 
+" Mappings
+" Move neatly through wrapped lines
+noremap j gj
+noremap k gk
+" Disable arrows to encourage hjkl movement
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
 
+" ESC is far away, map it to C-c
+noremap <C-c> <Esc>
+"
+" TODO: Use functionkeys
+noremap <F1> :Rake<CR>
+
+" Jump between buffers
+nnoremap <silent> <C-h> :bprevious<CR>
+nnoremap <silent> <C-l> :bnext<CR>
+
+" mappings to search for the highlighted word when pressing * or # in visual mode
+vnoremap * <Esc>/<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
+vnoremap # <Esc>?<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
+
+"--------------------------------------------------------------
+" Addons
+"--------------------------------------------------------------
+set runtimepath^=~/.vim/bundle/ctrlp.vim
