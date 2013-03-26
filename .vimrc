@@ -52,15 +52,20 @@ colorscheme wombat256 " Use colorscheme called wombat
 "--------------------------------------------------------------
 
 set expandtab		    " Convert tabs to spaces
-set shiftwidth=4	    " number of spaces used for each step of (auto)indent
-set tabstop=4           " number of spaces a <Tab> in the text stands for
-set softtabstop=4       " if non-zero, number of spaces to insert for a <Tab>
+set shiftwidth=2	    " number of spaces used for each step of (auto)indent
+set tabstop=2           " number of spaces a <Tab> in the text stands for
+set softtabstop=2       " if non-zero, number of spaces to insert for a <Tab>
+
+" Command line two rows high
+set ch=2
 
 "--------------------------------------------------------------
 " Status line
 "--------------------------------------------------------------
 " name, encoding, changed, content, errorflag, col#, line#/len
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%<\ %#errormsg#%{SyntasticStatuslineFlag()}%*%h%m%r%y%=%c,%l/%L\ %P
+" Derek Wyatts line
+"set stl=%f\ %m\ %r%{fugitive#statusline()}\ Line:%l/%L[%p%%]\ Col:%v\ Buf:#%n\ [%b][0x%B]
 
 "--------------------------------------------------------------
 " Textwidths for different filetypes
@@ -72,6 +77,13 @@ autocmd FileType tex set tw=70
 
 autocmd FileType python set sw=4
 autocmd FileType python set tw=110
+
+"--------------------------------------------------------------
+" Syntax highligting for log4j
+"--------------------------------------------------------------
+autocmd BufRead,BufNewFile *.log set syntax=log4j
+autocmd BufRead,BufNewFile *.out set syntax=log4j
+
 
 "--------------------------------------------------------------
 " \\Highlight trailing whitespaces
@@ -114,3 +126,4 @@ vnoremap # <Esc>?<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
 " Addons
 "--------------------------------------------------------------
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+execute pathogen#infect()

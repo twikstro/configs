@@ -19,7 +19,8 @@ alias findfile='find . -iname'
 alias mysql='mysql5'
 
 export GIT_PS1_SHOWDIRTYSTATE=1
-export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+export PROMPT_COMMAND=""
+#export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 parse_git_branch() {
       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \[\1\]/'
@@ -92,3 +93,8 @@ alias xargs=parallel
 
 # It is nice to be able to see directory names from 'ls' output
 export LSCOLORS=Exfxcxdxbxegedabagacad
+
+# Autocomplete ssh hostnames from .ssh/config
+complete -W "$(echo $(cat ~/.ssh/known_hosts | \
+      cut -f 1 -d ' ' | sed -e s/,.*//g | \
+          sort -u | grep -v "\["))" ssh scp
