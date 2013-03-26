@@ -85,11 +85,13 @@ shopt -s histappend
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 # Git autocompletion
-source /usr/local/git/contrib/completion/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-completion.bash
+source ~/Tools/bin/manbasedcompletion.sh
 
 # Git is fairly picky about locale
 alias git='LC_ALL=C git'
 alias xargs=parallel
+alias ssh=resetting-ssh
 
 # It is nice to be able to see directory names from 'ls' output
 export LSCOLORS=Exfxcxdxbxegedabagacad
@@ -97,4 +99,4 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 # Autocomplete ssh hostnames from .ssh/config
 complete -W "$(echo $(cat ~/.ssh/known_hosts | \
       cut -f 1 -d ' ' | sed -e s/,.*//g | \
-          sort -u | grep -v "\["))" ssh scp
+          sort -u | grep -v "\["))" ssh 

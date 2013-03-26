@@ -25,6 +25,7 @@ set nojoinspaces        " Do not add spaces after . when joining lines
 set linebreak           " Break lines at 'breakat' chars
 "set brk=\ \    !@*-+;:,./? " Characters to break line at
 set laststatus=2        " When to use status line for the last window
+set backspace=2         " Allow backspacing over characters entered in previous inserts 
 
 "--------------------------------------------------------------
 " GUI related
