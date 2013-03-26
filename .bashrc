@@ -17,6 +17,7 @@ alias gd='git diff --no-prefix'
 alias tpj='tp -j'
 alias findfile='find . -iname'
 alias mysql='mysql5'
+alias wdiff="git diff --color-words --no-index"
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PROMPT_COMMAND=""
@@ -46,11 +47,8 @@ setPrompt() {
 }
 setPrompt
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
 fi
 export TERM=xterm-color
 #ignore same inputs in history
@@ -87,6 +85,7 @@ export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 # Git autocompletion
 source /usr/local/etc/bash_completion.d/git-completion.bash
 source ~/Tools/bin/manbasedcompletion.sh
+source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
 
 # Git is fairly picky about locale
 alias git='LC_ALL=C git'
@@ -97,6 +96,6 @@ alias ssh=resetting-ssh
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
 # Autocomplete ssh hostnames from .ssh/config
-complete -W "$(echo $(cat ~/.ssh/known_hosts | \
-      cut -f 1 -d ' ' | sed -e s/,.*//g | \
-          sort -u | grep -v "\["))" ssh 
+#complete -W "$(echo $(cat ~/.ssh/known_hosts | \
+      #cut -f 1 -d ' ' | sed -e s/,.*//g | \
+          #sort -u | grep -v "\["))" ssh 
