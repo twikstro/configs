@@ -8,6 +8,7 @@ shopt -s histappend
 #aliases
 alias ls='ls -G'
 alias gcv='git commit --verbose'
+alias gca='git commit -a --verbose'
 alias ll='ls -l'
 alias la='ls -a'
 alias mysql='mysql5'
