@@ -2,26 +2,25 @@
 
 #Vim mode in bash
 set -o vi
+#Write history in realtime
+shopt -s histappend
 
 #aliases
 alias ls='ls -G'
-alias gs='git status'
 alias gcv='git commit --verbose'
 alias ll='ls -l'
 alias la='ls -a'
-alias dir='ls'
-alias gsd='git svn dcommit'
-alias gsr='git svn rebase'
-alias gcv='git commit --verbose'
-alias gd='git diff --no-prefix'
-alias tpj='tp -j'
-alias findfile='find . -iname'
 alias mysql='mysql5'
+# Use gits word-diffing 
 alias wdiff="git diff --color-words --no-index"
-
-export GIT_PS1_SHOWDIRTYSTATE=1
-export PROMPT_COMMAND=""
-#export PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+# Git is picky about locale
+alias git='LC_ALL=C git'
+# Parallel is like xargs, except better
+alias xargs=parallel
+# Wrapper for ssh, for restoring iterm2 tabcolors
+alias ssh=resetting-ssh
+# Add ssh-key to agent for 10 hours
+alias ssh-add='ssh-add -t 36000'
 
 parse_git_branch() {
       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \[\1\]/'
@@ -50,52 +49,36 @@ setPrompt
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
-export TERM=xterm-color
 #ignore same inputs in history
-export HISTCONTROL="ignoreboth"
-#add my dir of handy scripts to path
 export HISTIGNORE="cd:exit:pwd:hostname"
-export JAVA_HOME=/usr/lib/jvm/java-6-sun
-export JAVA_HOME=/Library/Java/Home
-export SVN_EDITOR=vim
+export HISTCONTROL="ignoreboth"
+export HISTSIZE=10000
+export TERM=xterm-color
+export SVN_EDITOR=/usr/local/bin/vim
+export GIT_EDITOR=/usr/local/bin/vim
 export ANT_HOME=/Users/twikstro/Tools/ant
-PATH=/usr/local/bin:$ANT_HOME/bin:$PATH:~/scripts:~/.gem/ruby/1.8/bin:$HOME/Tools/bin
-export PATH
-
-# source the right rvm function creation script based on rvm being installed system-wide or user-wide
-if [[ -s /usr/local/lib/rvm ]]; then
-    source /usr/local/lib/rvm
-elif [[ -s $HOME/.rvm/scripts/rvm ]]; then
-    source $HOME/.rvm/scripts/rvm
-fi
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
-
+export JAVA_HOME=/Library/Java/Home
+export GIT_PS1_SHOWDIRTYSTATE=1
 
 export JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
-
 export LANG=en_US
-alias ssh-add='ssh-add -t 38600'
-
-# Write bash history in realtime
-shopt -s histappend
+# It is nice to be able to see directory names from 'ls' output
+export LSCOLORS=Exfxcxdxbxegedabagacad
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+
+PATH=/usr/local/bin:$PATH
+# Apache Ant binaries
+PATH=$PATH:$ANT_HOME/bin
+# Local tools
+PATH=$PATH:$HOME/Tools/bin
+# Python checkers etc.
+PATH=$PATH:/usr/local/share/python
+export PATH
 
 # Git autocompletion
 source /usr/local/etc/bash_completion.d/git-completion.bash
+# Man autocompletion
 source ~/Tools/bin/manbasedcompletion.sh
+# Bash completion for brew
 source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
-
-# Git is fairly picky about locale
-alias git='LC_ALL=C git'
-alias xargs=parallel
-alias ssh=resetting-ssh
-
-# It is nice to be able to see directory names from 'ls' output
-export LSCOLORS=Exfxcxdxbxegedabagacad
-
-# Autocomplete ssh hostnames from .ssh/config
-#complete -W "$(echo $(cat ~/.ssh/known_hosts | \
-      #cut -f 1 -d ' ' | sed -e s/,.*//g | \
-          #sort -u | grep -v "\["))" ssh 
