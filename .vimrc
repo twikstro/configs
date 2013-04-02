@@ -23,20 +23,28 @@ Bundle 'gmarik/vundle'
 Bundle 'L9'
 " Full path fuzzy file, buffer, mru, tag, ... finder for Vim
 Bundle 'kien/ctrlp.vim'
+" Syntax highlighting
 Bundle 'scrooloose/syntastic'
+" Omnicompletion done better
 Bundle 'Valloric/YouCompleteMe'
+" Control git from vim
+Bundle 'tpope/vim-fugitive'
+" Display and manipulate directorty tree
+Bundle 'scrooloose/nerdtree'
+" Textmateish snipepts with vim
+Bundle 'SirVer/ultisnips'
 
 filetype plugin indent on
 
-set incsearch		        " Display matches as you write the pattern
-set hlsearch		        " Highlight matches
+set incsearch		    " Display matches as you write the pattern
+set hlsearch		    " Highlight matches
 set ignorecase          " Search ignores case
 set smartcase           " Ignore 'ignorecase' if pattern contains capitals
 
-set autoread		        " Automatically read a file that was changed outside vim
-set hidden		          " Do not unload a buffer when no longer shown in a window
-set wildmenu		        " Display options when pressing tab on command line
-			                  " e.g. :color <tab> USETHIS
+set autoread		    " Automatically read a file that was changed outside vim
+set hidden		        " Do not unload a buffer when no longer shown in a window
+set wildmenu		    " Display options when pressing tab on command line
+                        " e.g. :color <tab> USETHIS
 set whichwrap=h,l,[,],~ " list of flags specifying which commands wrap to another line
 set scrolloff=5         " Show 5 lines above and below cursor
                         " - e.g. when scrolling below screen edge
@@ -45,6 +53,7 @@ set linebreak           " Break lines at 'breakat' chars
                         " set brk=\ \    !@*-+;:,./? " Characters to break line at
 set laststatus=2        " When to use status line for the last window
 set backspace=2         " Allow backspacing over characters entered in previous inserts
+set pastetoggle=<f5>    " Toggle paste with F5
 
 "--------------------------------------------------------------
 " GUI related
@@ -65,16 +74,16 @@ let g:tex_flavor = "latex"
 "--------------------------------------------------------------
 set t_Co=256            " 256 colors
 colorscheme wombat256   " Use colorscheme called wombat
-			                  " Put scheme.vim in ~/.vim/colors
+			            " Put scheme.vim in ~/.vim/colors
 
 "--------------------------------------------------------------
 " Text formatting
 "--------------------------------------------------------------
 
-set expandtab		        " Convert tabs to spaces
-set shiftwidth=2	      " number of spaces used for each step of (auto)indent
-set tabstop=2           " number of spaces a <Tab> in the text stands for
-set softtabstop=2       " if non-zero, number of spaces to insert for a <Tab>
+set expandtab		    " Convert tabs to spaces
+set shiftwidth=4	    " number of spaces used for each step of (auto)indent
+set tabstop=4           " number of spaces a <Tab> in the text stands for
+set softtabstop=4       " if non-zero, number of spaces to insert for a <Tab>
 
 " Command line two rows high
 set ch=2
@@ -125,6 +134,7 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd BufReadPost quickfix set cursorline
 
 " Mappings
+
 " Move neatly through wrapped lines
 noremap j gj
 noremap k gk
@@ -138,11 +148,16 @@ noremap <Right> <nop>
 noremap <C-c> <Esc>
 "
 " TODO: Use functionkeys
-noremap <F1> :Rake<CR>
-
-" Jump between buffers
-nnoremap <silent> <C-h> :bprevious<CR>
-nnoremap <silent> <C-l> :bnext<CR>
+noremap <silent> <F1> :bnext<CR>
+noremap <silent> <F2> :bprev<CR>
+"noremap <F3>
+"noremap <F3>
+"noremap <F4>
+"noremap <F5> PASTETOGGLE
+"noremap <F6> NERDTREE
+"noremap <F7>
+"noremap <F8>
+"noremap <F9>
 
 " mappings to search for the highlighted word when pressing * or # in visual mode
 vnoremap * <Esc>/<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
@@ -151,7 +166,6 @@ vnoremap # <Esc>?<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
 "--------------------------------------------------------------
 " Addons
 "--------------------------------------------------------------
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 " CtrlP
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
@@ -166,3 +180,6 @@ let g:syntastic_enable_highlighting = 1
 " Todo: Do i want to use this
 let g:syntastic_quiet_warnings=0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+" NERDtree for displaying directory structure
+map <F6> :NERDTreeToggle<CR>
