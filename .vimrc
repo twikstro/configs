@@ -10,7 +10,6 @@ set nocompatible        " Do not act overly VI-compatible
 syntax on		            " Highlight syntax
 filetype off
 
-
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -113,6 +112,8 @@ autocmd FileType tex set tw=70
 autocmd FileType python set sw=4
 autocmd FileType python set tw=110
 
+autocmd FileType xml setf xml
+
 "--------------------------------------------------------------
 " Syntax highligting for log4j
 "--------------------------------------------------------------
@@ -150,9 +151,8 @@ noremap <C-c> <Esc>
 " TODO: Use functionkeys
 noremap <silent> <F1> :bnext<CR>
 noremap <silent> <F2> :bprev<CR>
-"noremap <F3>
-"noremap <F3>
-"noremap <F4>
+noremap <silent> <F3> :tabp<CR>
+noremap <silent> <F4> :tabN<CR>
 "noremap <F5> PASTETOGGLE
 "noremap <F6> NERDTREE
 "noremap <F7>
