@@ -9,6 +9,7 @@ shopt -s histappend
 alias ls='ls -G'
 alias gcv='git commit --verbose'
 alias gca='git commit -a --verbose'
+alias gst='git status'
 alias ll='ls -l'
 alias la='ls -a'
 alias mysql='mysql5'
@@ -63,8 +64,6 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 
 export JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
-export LANG=fi_FI.UTF-8
-export LC_ALL=fi_FI.UTF-8
 # It is nice to be able to see directory names from 'ls' output
 export LSCOLORS=Exfxcxdxbxegedabagacad
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"

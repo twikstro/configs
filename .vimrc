@@ -90,14 +90,16 @@ set ch=2
 "--------------------------------------------------------------
 " Status line
 "--------------------------------------------------------------
+" Git branch
+" Aligning rest right (%=)
+set statusline=%{fugitive#statusline()}
 " Filename[file encoding, os]
-set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]
+set statusline+=\ %t\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]
 " Whitespace
-set statusline+=%<\ 
+set statusline+=%<
 " [RO] if file is read only (%r)
 " Modified flag (%m)
 " File contents, e.g. [python], [ruby] (%y)
-" Aligning rest right (%=)
 set statusline+=%r%m%y%=
 set statusline+=%#errormsg#%{SyntasticStatuslineFlag()}%*%h
 set statusline+=%c,%l/%L\ %P
@@ -113,6 +115,8 @@ autocmd FileType python set sw=4
 autocmd FileType python set tw=110
 
 autocmd FileType xml setf xml
+
+au BufNewFile,BufRead *.groovy  setf groovy
 
 "--------------------------------------------------------------
 " Syntax highligting for log4j
@@ -154,7 +158,7 @@ noremap <silent> <F2> :bprev<CR>
 noremap <silent> <F3> :tabp<CR>
 noremap <silent> <F4> :tabN<CR>
 "noremap <F5> PASTETOGGLE
-"noremap <F6> NERDTREE
+noremap <F6> NERDTREE
 "noremap <F7>
 "noremap <F8>
 "noremap <F9>
@@ -173,6 +177,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 " Syntastic
 " Use pylint for python
 let g:syntastic_python_checkers=['pylint']
+let g:syntastic_python_checker_args = '--rcfile=~/.pylintrc'
 " Use different signs to indicate different warnings/errors
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open=1
@@ -183,3 +188,11 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " NERDtree for displaying directory structure
 map <F6> :NERDTreeToggle<CR>
+" Git Branch
+" Only show current branch with current=1
+let g:git_branch_status_head_current=1
+let g:git_branch_status_text=""
+" Surround branch name with these chars
+let g:git_branch_status_around="[]"
+" What to print when cwd not a git repo
+let g:git_branch_status_nogit=""
