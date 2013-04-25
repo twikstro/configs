@@ -1,4 +1,6 @@
 "--------------------------------------------------------------
+"
+"
 " .vimrc
 "--------------------------------------------------------------
 
@@ -9,6 +11,7 @@ set nocompatible        " Do not act overly VI-compatible
 
 syntax on		            " Highlight syntax
 filetype off
+
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -53,6 +56,10 @@ set linebreak           " Break lines at 'breakat' chars
 set laststatus=2        " When to use status line for the last window
 set backspace=2         " Allow backspacing over characters entered in previous inserts
 set pastetoggle=<f5>    " Toggle paste with F5
+
+" Folds
+set foldmethod=indent
+set foldlevel=99
 
 "--------------------------------------------------------------
 " GUI related
@@ -100,7 +107,7 @@ set statusline+=%<
 " [RO] if file is read only (%r)
 " Modified flag (%m)
 " File contents, e.g. [python], [ruby] (%y)
-set statusline+=%r%m%y%=
+set statusline+=%r%y%#error#%m%*%=
 set statusline+=%#errormsg#%{SyntasticStatuslineFlag()}%*%h
 set statusline+=%c,%l/%L\ %P
 "--------------------------------------------------------------
@@ -117,6 +124,7 @@ autocmd FileType python set tw=110
 autocmd FileType xml setf xml
 
 au BufNewFile,BufRead *.groovy  setf groovy
+autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
 
 "--------------------------------------------------------------
 " Syntax highligting for log4j
@@ -161,11 +169,17 @@ noremap <silent> <F4> :tabN<CR>
 noremap <F6> NERDTREE
 "noremap <F7>
 "noremap <F8>
-"noremap <F9>
+nnoremap <silent> <F9> :call <SID>StripTrailingWhitespaces()<CR>
 
 " mappings to search for the highlighted word when pressing * or # in visual mode
 vnoremap * <Esc>/<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
 vnoremap # <Esc>?<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
+
+" Mapping for moving among windows
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
 
 "--------------------------------------------------------------
 " Addons
@@ -196,3 +210,14 @@ let g:git_branch_status_text=""
 let g:git_branch_status_around="[]"
 " What to print when cwd not a git repo
 let g:git_branch_status_nogit=""
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
