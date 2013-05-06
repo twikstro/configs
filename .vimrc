@@ -35,6 +35,8 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/nerdtree'
 " Textmateish snipepts with vim
 Bundle 'SirVer/ultisnips'
+Bundle 'mfukar/robotframework-vim'
+Bundle 'wikitopian/hardmode'
 
 filetype plugin indent on
 
@@ -126,6 +128,9 @@ autocmd FileType xml setf xml
 au BufNewFile,BufRead *.groovy  setf groovy
 autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
 
+" Hardmode
+autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+
 "--------------------------------------------------------------
 " Syntax highligting for log4j
 "--------------------------------------------------------------
@@ -210,6 +215,7 @@ let g:git_branch_status_text=""
 let g:git_branch_status_around="[]"
 " What to print when cwd not a git repo
 let g:git_branch_status_nogit=""
+let g:robot_syntax_for_txt=1
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
