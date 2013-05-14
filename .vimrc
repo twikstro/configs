@@ -37,6 +37,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'SirVer/ultisnips'
 Bundle 'mfukar/robotframework-vim'
 Bundle 'wikitopian/hardmode'
+Bundle 'tpope/vim-surround'
 
 filetype plugin indent on
 
@@ -68,7 +69,6 @@ set foldlevel=99
 "--------------------------------------------------------------
 set guioptions-=T                    " TODO
 set grepprg=grep\ -nH\ $*\ /dev/null " program used for the ":grep" command
-set guifont=Andale\ Mono\ 12         " TODO
 
 "--------------------------------------------------------------
 " Tags
@@ -127,9 +127,12 @@ autocmd FileType xml setf xml
 
 au BufNewFile,BufRead *.groovy  setf groovy
 autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
+"
 
-" Hardmode
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+" Open vimrc in new tab with ,v
+let mapleader = ","
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
 
 "--------------------------------------------------------------
 " Syntax highligting for log4j
@@ -186,6 +189,25 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" Macros
+" Open up modifiable files in tabs + open a buffer with lines to remove in
+" another buffer. For convenience you can do ':set nomodifiable' on the buffer
+" of files to remove
+" Run this macro like 'ggVG :normal @o'
+" ggVG - visually select the file (file with patterns to remove)
+" :normal @o - invoke the normal-mode command found in register o for each line
+"
+" The macro selects each line in a file, and for all other open tabs searches
+" and removes lines matching it
+" 0v$h - select a line (excluding newline at end)
+" "lyy - yank line to register l
+" :tabdo - execute the following for each tab
+" exe - used to be able to reference register l:s contents in a g(lobal)
+" command
+" g/@l/d - delete lines matching this pattern
+let @o = "0v$h\"lyy:tabdo exe 'g/' . @l . '/d'"
+
+
 "--------------------------------------------------------------
 " Addons
 "--------------------------------------------------------------
@@ -207,6 +229,8 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " NERDtree for displaying directory structure
 map <F6> :NERDTreeToggle<CR>
+" CtrlP
+
 " Git Branch
 " Only show current branch with current=1
 let g:git_branch_status_head_current=1
@@ -216,6 +240,7 @@ let g:git_branch_status_around="[]"
 " What to print when cwd not a git repo
 let g:git_branch_status_nogit=""
 let g:robot_syntax_for_txt=1
+
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -226,4 +251,9 @@ function! <SID>StripTrailingWhitespaces()
     " Clean up: restore previous search history, and cursor position
     let @/=_s
     call cursor(l, c)
+endfunction
+
+function <SID>RemoveBasedOnThisfile()
+    set nomodifiable
+    set modifiable
 endfunction
