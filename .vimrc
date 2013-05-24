@@ -189,6 +189,22 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" Bubble single lines
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Bubble multiple lines
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
+" Map gV to select last edited/pasted selection
+nmap gV `[v`]
+
+" Unused highly accessible keys:
+nmap ä .
+nmap ö .
+nmap å .
+nmap ' .
+nmap - .
+
 " Macros
 " Open up modifiable files in tabs + open a buffer with lines to remove in
 " another buffer. For convenience you can do ':set nomodifiable' on the buffer
@@ -253,7 +269,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 
-function <SID>RemoveBasedOnThisfile()
-    set nomodifiable
+function! <SID>RemoveBasedOnThisfile()
     set modifiable
+    set nomodifiable
 endfunction

@@ -55,6 +55,7 @@ fi
 export HISTIGNORE="cd:exit:pwd:hostname"
 export HISTCONTROL="ignoreboth"
 export HISTSIZE=10000
+export HISTTIMEFORMAT='%F %T '
 export TERM=xterm-color
 export SVN_EDITOR=/usr/local/bin/vim
 export GIT_EDITOR=/usr/local/bin/vim
