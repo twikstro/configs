@@ -6,14 +6,16 @@ set -o vi
 shopt -s histappend
 
 #aliases
-alias ls='ls -G'
 alias gcv='git commit --verbose'
 alias gca='git commit -a --verbose'
 alias gst='git status'
+
+alias ls='ls -G'
 alias ll='ls -l'
 alias la='ls -a'
+
 alias mysql='mysql5'
-# Use gits word-diffing 
+# Use gits word-diffing
 alias wdiff="git diff --color-words --no-index"
 # Git is picky about locale
 alias git='LC_ALL=C git'
@@ -30,8 +32,6 @@ parse_git_branch() {
 
 #change the prompt
 setPrompt() {
-    #local GREEN_FG="\[\033[32m\]"
-    #local DEFAULT_FG="\033[39m\]"
     local GREEN_FG="$(tput setaf 2)"
     local DEFAULT_FG="$(tput sgr0)"
     local BLUE_FG="$(tput bold ; tput setaf 4)"
@@ -52,7 +52,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 #ignore same inputs in history
-HISTIGNORE="cd:exit:pwd:hostname"
+HISTIGNORE="cd:exit:pwd:hostname:ls:pwd:history:exit:clear"
 HISTCONTROL="ignoreboth"
 HISTSIZE=10000
 HISTTIMEFORMAT='%F %T  '
