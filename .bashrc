@@ -38,6 +38,10 @@ parse_git_branch() {
       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \[\1\]/'
  }
 
+parse_git_dirty() {
+     [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+ }
+
 #change the prompt
 setPrompt() {
     local GREEN_FG="$(tput setaf 2)"
@@ -47,7 +51,7 @@ setPrompt() {
 
     local BRANCH_COLOR="\[\033[00;35m\]"
     # Directory and Git-branch
-    local PROMPT_1="${BLUE_FG}\w${BRANCH_COLOR}\$(parse_git_branch)\n"
+    local PROMPT_1="${BLUE_FG}\w${BRANCH_COLOR}\$(parse_git_branch) $(parse_git_dirty)\n"
     # Username and hostname
     local PROMPT_2="${DEFAULT_FG}[${GREEN_FG}\u${DEFAULT_FG}@${GREEN_FG}localhost${DEFAULT_FG}]\n"
     # Line for new input
