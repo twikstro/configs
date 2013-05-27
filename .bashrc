@@ -1,5 +1,13 @@
  [ -z "$PS1" ] && return
 
+# Git autocompletion
+source /usr/local/etc/bash_completion.d/git-completion.bash
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+# Man autocompletion
+source ~/Tools/bin/manbasedcompletion.sh
+# Bash completion for brew
+source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
+
 #Vim mode in bash
 set -o vi
 #Write history in realtime
@@ -56,7 +64,7 @@ HISTIGNORE="cd:exit:pwd:hostname:ls:pwd:history:exit:clear"
 HISTCONTROL="ignoreboth"
 HISTSIZE=10000
 HISTTIMEFORMAT='%F %T  '
-TERM=xterm-color
+TERM=xterm-256color
 SVN_EDITOR=/usr/local/bin/vim
 GIT_EDITOR=/usr/local/bin/vim
 ANT_HOME=/Users/twikstro/Tools/ant
@@ -66,7 +74,7 @@ GIT_PS1_SHOWDIRTYSTATE=1
 JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 # It is nice to be able to see directory names from 'ls' output
-LSCOLORS=Exfxcxdxbxegedabagacad
+export LSCOLORS=Exfxcxdxbxegedabagacad
 PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 PATH=/usr/local/bin:$PATH
@@ -77,9 +85,3 @@ PATH=$PATH:$HOME/Tools/bin
 # Python checkers etc.
 PATH=$PATH:/usr/local/share/python
 
-# Git autocompletion
-source /usr/local/etc/bash_completion.d/git-completion.bash
-# Man autocompletion
-source ~/Tools/bin/manbasedcompletion.sh
-# Bash completion for brew
-source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
