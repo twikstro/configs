@@ -52,22 +52,22 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 #ignore same inputs in history
-export HISTIGNORE="cd:exit:pwd:hostname"
-export HISTCONTROL="ignoreboth"
-export HISTSIZE=10000
-export HISTTIMEFORMAT='%F %T '
-export TERM=xterm-color
-export SVN_EDITOR=/usr/local/bin/vim
-export GIT_EDITOR=/usr/local/bin/vim
-export ANT_HOME=/Users/twikstro/Tools/ant
-export JAVA_HOME=/Library/Java/Home
-export GIT_PS1_SHOWDIRTYSTATE=1
+HISTIGNORE="cd:exit:pwd:hostname"
+HISTCONTROL="ignoreboth"
+HISTSIZE=10000
+HISTTIMEFORMAT='%F %T  '
+TERM=xterm-color
+SVN_EDITOR=/usr/local/bin/vim
+GIT_EDITOR=/usr/local/bin/vim
+ANT_HOME=/Users/twikstro/Tools/ant
+JAVA_HOME=/Library/Java/Home
+GIT_PS1_SHOWDIRTYSTATE=1
 
-export JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
-export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
+JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
+ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 # It is nice to be able to see directory names from 'ls' output
-export LSCOLORS=Exfxcxdxbxegedabagacad
-export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+LSCOLORS=Exfxcxdxbxegedabagacad
+PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 PATH=/usr/local/bin:$PATH
 # Apache Ant binaries
@@ -76,7 +76,6 @@ PATH=$PATH:$ANT_HOME/bin
 PATH=$PATH:$HOME/Tools/bin
 # Python checkers etc.
 PATH=$PATH:/usr/local/share/python
-export PATH
 
 # Git autocompletion
 source /usr/local/etc/bash_completion.d/git-completion.bash
