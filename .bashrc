@@ -17,6 +17,7 @@ shopt -s histappend
 alias gcv='git commit --verbose'
 alias gca='git commit -a --verbose'
 alias gst='git status'
+alias gr='cd "$(git rev-parse --show-toplevel)"'
 
 alias ls='ls -G'
 alias ll='ls -l'
