@@ -34,6 +34,9 @@ alias xargs=parallel
 alias ssh=resetting-ssh
 # Add ssh-key to agent for 10 hours
 alias ssh-add='ssh-add -t 36000'
+alias strace='echo use dtruss on Mac OS'
+
+alias rebuild_ycm='cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer'
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ \[\1\] $(parse_git_dirty)/"
@@ -61,9 +64,16 @@ setPrompt() {
 }
 setPrompt
 
+updateRepos() {
+    for repo in devel databases configuration jenkins-repo; do cd $repo && git pull && cd -; done
+}
+
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
+
+complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
+
 #ignore same inputs in history
 HISTIGNORE="cd:exit:pwd:hostname:ls:pwd:history:exit:clear"
 HISTCONTROL="ignoreboth"
@@ -72,21 +82,24 @@ HISTTIMEFORMAT='%F %T  '
 TERM=xterm-256color
 SVN_EDITOR=/usr/local/bin/vim
 GIT_EDITOR=/usr/local/bin/vim
-ANT_HOME=/Users/twikstro/Tools/ant
+# export => seen in env, no export => seen in set
+export ANT_HOME=/Users/twikstro/Tools/ant
 JAVA_HOME=/Library/Java/Home
 GIT_PS1_SHOWDIRTYSTATE=1
 
-JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
-ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
+export JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
+export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 # It is nice to be able to see directory names from 'ls' output
 export LSCOLORS=Exfxcxdxbxegedabagacad
 PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
-PATH=/usr/local/bin:$PATH
+PATH=/usr/locar/bin:$PATH
 # Apache Ant binaries
 PATH=$PATH:$ANT_HOME/bin
 # Local tools
 PATH=$PATH:$HOME/Tools/bin
-# Python checkers etc.
-PATH=$PATH:/usr/local/share/python
+# TODO?  Adding this due to complaint of missing diff-highlight command
+PATH=$PATH:/usr/local/Cellar/git/1.8.4/share/git-core/contrib/diff-highlight/
 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
