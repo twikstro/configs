@@ -245,7 +245,7 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " NERDtree for displaying directory structure
 map <F6> :NERDTreeToggle<CR>
-" CtrlP
+//TODO: *rewrite* Actually im just testing CodeNotes
 
 " Git Branch
 " Only show current branch with current=1
