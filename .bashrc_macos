@@ -1,6 +1,12 @@
  [ -z "$PS1" ] && return
 
+# Git autocompletion
+source /usr/local/etc/bash_completion.d/git-completion.bash
 source /usr/local/etc/bash_completion.d/git-prompt.sh
+# Man autocompletion
+source ~/Tools/bin/manbasedcompletion.sh
+# Bash completion for brew
+source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
 
 #Vim mode in bash
 set -o vi
@@ -11,7 +17,7 @@ shopt -s histappend
 alias gcv='git commit --verbose'
 alias gca='git commit -a --verbose'
 alias gst='git status'
-alias gitroot='cd "$(git rev-parse --show-toplevel)"'
+alias gr='cd "$(git rev-parse --show-toplevel)"'
 
 alias ls='ls -G'
 alias ll='ls -l'
@@ -24,9 +30,11 @@ alias wdiff="git diff --color-words --no-index"
 alias git='LC_ALL=C git'
 # Parallel is like xargs, except better
 alias xargs=parallel
-
-# TODO: ssh agent
-# alias ssh-add='ssh-add -t 36000'
+# Wrapper for ssh, for restoring iterm2 tabcolors
+alias ssh=resetting-ssh
+# Add ssh-key to agent for 10 hours
+alias ssh-add='ssh-add -t 36000'
+alias strace='echo use dtruss on Mac OS'
 
 alias rebuild_ycm='cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer'
 
@@ -55,6 +63,14 @@ setPrompt() {
     export PS1="${PROMPT_1}${PROMPT_2}${PROMPT_3}"
 }
 setPrompt
+
+updateRepos() {
+    for repo in devel databases configuration jenkins-repo; do cd $repo && git pull && cd -; done
+}
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
 
 complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
 
@@ -87,5 +103,3 @@ PATH=$PATH:/usr/local/Cellar/git/1.8.4/share/git-core/contrib/diff-highlight/
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-source ~/configs/.bashrc_xterm
