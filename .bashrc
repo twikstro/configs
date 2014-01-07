@@ -1,7 +1,5 @@
  [ -z "$PS1" ] && return
 
-source /usr/local/etc/bash_completion.d/git-prompt.sh
-
 #Vim mode in bash
 set -o vi
 #Write history in realtime
@@ -13,7 +11,7 @@ alias gca='git commit -a --verbose'
 alias gst='git status'
 alias gitroot='cd "$(git rev-parse --show-toplevel)"'
 
-alias ls='ls -G'
+alias ls='ls -G --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 
@@ -35,7 +33,7 @@ parse_git_branch() {
  }
 
 parse_git_dirty() {
-     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
+     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
  }
 
 #change the prompt
@@ -56,17 +54,21 @@ setPrompt() {
 }
 setPrompt
 
-complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
+#complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
+. /etc/bash_completion
 
 #ignore same inputs in history
-HISTIGNORE="cd:exit:pwd:hostname:ls:pwd:history:exit:clear"
+HISTIGNORE="cd*:exit:pwd:hostname:ls*:history*:exit:clear"
 HISTCONTROL="ignoreboth"
 HISTSIZE=10000
 HISTTIMEFORMAT='%F %T  '
 TERM=xterm-256color
-SVN_EDITOR=/usr/local/bin/vim
-GIT_EDITOR=/usr/local/bin/vim
+export EDITOR=/usr/bin/vim
+export SVN_EDITOR=/usr/bin/vim
+export GIT_EDITOR=/usr/bin/vim
+alias vim=/usr/bin/vim
 # export => seen in env, no export => seen in set
+export ACK_PAGER_COLOR="less -R"
 export ANT_HOME=/Users/twikstro/Tools/ant
 JAVA_HOME=/Library/Java/Home
 GIT_PS1_SHOWDIRTYSTATE=1
@@ -74,7 +76,8 @@ GIT_PS1_SHOWDIRTYSTATE=1
 export JAVA_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 # It is nice to be able to see directory names from 'ls' output
-export LSCOLORS=Exfxcxdxbxegedabagacad
+#export LSCOLORS=Exfxcxdxbxegedabagacad
+export LS_COLORS='di=36:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:*.deb=90'
 PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 PATH=/usr/locar/bin:$PATH
@@ -89,3 +92,4 @@ PATH=$PATH:/usr/local/Cellar/git/1.8.4/share/git-core/contrib/diff-highlight/
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source ~/configs/.bashrc_xterm
+source ~/.bashrc_secure

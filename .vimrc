@@ -68,7 +68,8 @@ set foldlevel=99
 " GUI related
 "--------------------------------------------------------------
 set guioptions-=T                    " TODO
-set grepprg=grep\ -nH\ $*\ /dev/null " program used for the ":grep" command
+"set grepprg=grep\ -nH\ $*\ /dev/null " program used for the ":grep" command
+set grepprg=ack\ -k " program used for the ":grep" command
 
 "--------------------------------------------------------------
 " Tags
@@ -205,6 +206,9 @@ nmap å .
 nmap ' .
 nmap - .
 
+" Allow saving of files as sudo when I forgot to start vim using sudo
+cmap w!! w !sudo tee > /dev/null %
+
 " Macros
 " Open up modifiable files in tabs + open a buffer with lines to remove in
 " another buffer. For convenience you can do ':set nomodifiable' on the buffer
@@ -245,8 +249,6 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " NERDtree for displaying directory structure
 map <F6> :NERDTreeToggle<CR>
-//TODO: *rewrite* Actually im just testing CodeNotes
-
 " Git Branch
 " Only show current branch with current=1
 let g:git_branch_status_head_current=1
