@@ -200,11 +200,16 @@ vmap <C-Down> xp`[V`]
 nmap gV `[v`]
 
 " Unused highly accessible keys:
+" TODO: Use these
 nmap ä .
 nmap ö .
 nmap å .
 nmap ' .
 nmap - .
+
+let g:UltiSnipsExpandTrigger = "F12"
+let g:UltiSnipsJumpForwardTrigger = "F11"
+let g:UltiSnipsJumpBackwardTrigger = "F10"
 
 " Allow saving of files as sudo when I forgot to start vim using sudo
 cmap w!! w !sudo tee > /dev/null %
