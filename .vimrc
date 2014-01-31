@@ -1,6 +1,4 @@
 "--------------------------------------------------------------
-"
-"
 " .vimrc
 "--------------------------------------------------------------
 
@@ -33,10 +31,9 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'tpope/vim-fugitive'
 " Display and manipulate directorty tree
 Bundle 'scrooloose/nerdtree'
-" Textmateish snipepts with vim
+" Textmateish snipets with vim
 Bundle 'SirVer/ultisnips'
 Bundle 'mfukar/robotframework-vim'
-Bundle 'wikitopian/hardmode'
 Bundle 'tpope/vim-surround'
 
 filetype plugin indent on
@@ -133,7 +130,12 @@ autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
 " Open vimrc in new tab with ,v
 let mapleader = ","
 nmap <leader>v :tabedit $MYVIMRC<CR>
-
+nmap <leader>V :so $MYVIMRC<CR>
+" Cycle through location list
+nmap <leader>b :lprev<CR>
+nmap <leader>n :lnext<CR>
+nnoremap <space> za
+vnoremap <space> zf
 
 "--------------------------------------------------------------
 " Syntax highligting for log4j
@@ -179,6 +181,7 @@ noremap <F6> NERDTREE
 "noremap <F7>
 "noremap <F8>
 nnoremap <silent> <F9> :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <silent> <F12> :close<CR>
 
 " mappings to search for the highlighted word when pressing * or # in visual mode
 vnoremap * <Esc>/<c-r>=escape(@*, '\/.*$^~[]')<CR><CR>
@@ -249,8 +252,10 @@ let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_highlighting = 1
 " Todo: Do i want to use this
-let g:syntastic_quiet_warnings=0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+" Had let g:syntastic_quiet_warnings=0, maybe the one below needs some
+" configuration
+"let g:syntastic_quiet_messages
 
 " NERDtree for displaying directory structure
 map <F6> :NERDTreeToggle<CR>
@@ -279,4 +284,15 @@ endfunction
 function! <SID>RemoveBasedOnThisfile()
     set modifiable
     set nomodifiable
+endfunction
+
+command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
+
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(values(buffer_numbers))
 endfunction

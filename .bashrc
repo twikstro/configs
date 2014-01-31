@@ -58,18 +58,26 @@ setPrompt
 . /etc/bash_completion
 
 #ignore same inputs in history
-HISTIGNORE="cd*:exit:pwd:hostname:ls*:history*:exit:clear"
+HISTIGNORE="cd*:exit:pwd:hostname:ls:history*:exit:clear"
 HISTCONTROL="ignoreboth"
 HISTSIZE=10000
 HISTTIMEFORMAT='%F %T  '
 TERM=xterm-256color
-export EDITOR=/usr/bin/vim
-export SVN_EDITOR=/usr/bin/vim
-export GIT_EDITOR=/usr/bin/vim
-alias vim=/usr/bin/vim
+export EDITOR=vim
+export SVN_EDITOR=vim
+export GIT_EDITOR=vim
+# alias vim=/usr/bin/vim
+# My vim croquet experiment
+alias vim='/usr/bin/vim -w ~/.vimlog "$@"'
 # export => seen in env, no export => seen in set
 export ACK_PAGER_COLOR="less -R"
 export ANT_HOME=/Users/twikstro/Tools/ant
+# Kone specific
+export EXTRA_SCONSFLAGS='--m64 --ln --clang'
+#export DISTCC_HOSTS="+zeroconf"
+export SCONS_CACHE_DIR=/mnt/scache
+export SCONSFLAGS="$SCONSFLAGS -j8 --m64"
+
 JAVA_HOME=/Library/Java/Home
 GIT_PS1_SHOWDIRTYSTATE=1
 
