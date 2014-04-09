@@ -5,14 +5,15 @@
 "--------------------------------------------------------------
 " Behavior
 "--------------------------------------------------------------
+
+" These are for Vundle
 set nocompatible        " Do not act overly VI-compatible
-
-syntax on		            " Highlight syntax
 filetype off
-
-
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+syntax on		            " Highlight syntax
+
 
 " let Vundle manage Vundle
 " required!
@@ -35,6 +36,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'SirVer/ultisnips'
 Bundle 'mfukar/robotframework-vim'
 Bundle 'tpope/vim-surround'
+Bundle 'sjl/gundo.vim'
 
 filetype plugin indent on
 
@@ -57,9 +59,10 @@ set laststatus=2        " When to use status line for the last window
 set backspace=2         " Allow backspacing over characters entered in previous inserts
 set pastetoggle=<f5>    " Toggle paste with F5
 
-" Folds
+" Fold
 set foldmethod=indent
-set foldlevel=99
+set foldlevel=5
+set foldnestmax=1
 
 "--------------------------------------------------------------
 " GUI related
@@ -134,8 +137,10 @@ nmap <leader>V :so $MYVIMRC<CR>
 " Cycle through location list
 nmap <leader>b :lprev<CR>
 nmap <leader>n :lnext<CR>
+" Fold handling
 nnoremap <space> za
 vnoremap <space> zf
+"nmap <leader>a <Esc>:Ack!<CR>
 
 "--------------------------------------------------------------
 " Syntax highligting for log4j
@@ -176,8 +181,8 @@ noremap <silent> <F1> :bnext<CR>
 noremap <silent> <F2> :bprev<CR>
 noremap <silent> <F3> :tabp<CR>
 noremap <silent> <F4> :tabN<CR>
-"noremap <F5> PASTETOGGLE
-noremap <F6> NERDTREE
+noremap <silent> <F5> :GundoToggle<CR>
+map <F6> :NERDTreeToggle<CR>
 "noremap <F7>
 "noremap <F8>
 nnoremap <silent> <F9> :call <SID>StripTrailingWhitespaces()<CR>
@@ -194,11 +199,11 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 
 " Bubble single lines
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
+"nmap <C-Up> ddkP
+"nmap <C-Down> ddp
 " Bubble multiple lines
-vmap <C-Up> xkP`[V`]
-vmap <C-Down> xp`[V`]
+"vmap <C-Up> xkP`[V`]
+"vmap <C-Down> xp`[V`]
 " Map gV to select last edited/pasted selection
 nmap gV `[v`]
 
@@ -210,9 +215,17 @@ nmap å .
 nmap ' .
 nmap - .
 
-let g:UltiSnipsExpandTrigger = "F12"
+" Ultisnips configuration
+let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsJumpForwardTrigger = "F11"
 let g:UltiSnipsJumpBackwardTrigger = "F10"
+
+" Gundo configuration
+let g:gundo_width = 60
+let g:gundo_preview_height = 20
+" Place preview under open window, instead of under gundo
+let g:gundo_preview_bottom = 0
+let g:gundo_right = 0
 
 " Allow saving of files as sudo when I forgot to start vim using sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -258,7 +271,6 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 "let g:syntastic_quiet_messages
 
 " NERDtree for displaying directory structure
-map <F6> :NERDTreeToggle<CR>
 " Git Branch
 " Only show current branch with current=1
 let g:git_branch_status_head_current=1
@@ -296,3 +308,4 @@ function! QuickfixFilenames()
   endfor
   return join(values(buffer_numbers))
 endfunction
+

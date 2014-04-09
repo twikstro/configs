@@ -57,6 +57,8 @@ setPrompt
 #complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
 . /etc/bash_completion
 
+# Ignore .pyc files in filename autocompletion
+FIGNORE=pyc
 #ignore same inputs in history
 HISTIGNORE="cd*:exit:pwd:hostname:ls:history*:exit:clear"
 HISTCONTROL="ignoreboth"
