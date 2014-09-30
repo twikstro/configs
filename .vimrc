@@ -31,7 +31,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Control git from vim
 Bundle 'tpope/vim-fugitive'
 " Display and manipulate directorty tree
-Bundle 'scrooloose/nerdtree'
+"Bundle 'scrooloose/nerdtree'
 " Textmateish snipets with vim
 Bundle 'SirVer/ultisnips'
 Bundle 'mfukar/robotframework-vim'
@@ -39,6 +39,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'sjl/gundo.vim'
 
 filetype plugin indent on
+cabbrev E Explore
 
 set incsearch		    " Display matches as you write the pattern
 set hlsearch		    " Highlight matches
@@ -69,7 +70,7 @@ set foldnestmax=1
 "--------------------------------------------------------------
 set guioptions-=T                    " TODO
 "set grepprg=grep\ -nH\ $*\ /dev/null " program used for the ":grep" command
-set grepprg=ack\ -k " program used for the ":grep" command
+set grepprg=ack\ -H\ --nocolor\ --nogroup " program used for the ":grep" command
 
 "--------------------------------------------------------------
 " Tags
@@ -77,6 +78,10 @@ set grepprg=ack\ -k " program used for the ":grep" command
 let Tlist_WinWidth = 40
 let Tlist_Sort_Type = "name"
 let g:tex_flavor = "latex"
+
+
+" netrw
+let g:netrw_liststyle=3
 
 "--------------------------------------------------------------
 " Look - colors etc.
@@ -182,7 +187,7 @@ noremap <silent> <F2> :bprev<CR>
 noremap <silent> <F3> :tabp<CR>
 noremap <silent> <F4> :tabN<CR>
 noremap <silent> <F5> :GundoToggle<CR>
-map <F6> :NERDTreeToggle<CR>
+map <F6> :Explore<CR>
 "noremap <F7>
 "noremap <F8>
 nnoremap <silent> <F9> :call <SID>StripTrailingWhitespaces()<CR>
