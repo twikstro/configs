@@ -10,6 +10,7 @@ alias gcv='git commit --verbose'
 alias gca='git commit -a --verbose'
 alias gst='git status'
 alias gitroot='cd "$(git rev-parse --show-toplevel)"'
+alias gg="git grep -i"
 
 alias ls='ls -G --color=auto'
 alias ll='ls -l'
@@ -33,7 +34,7 @@ parse_git_branch() {
  }
 
 parse_git_dirty() {
-     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+     [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
  }
 
 #change the prompt
@@ -60,9 +61,10 @@ setPrompt
 # Ignore .pyc files in filename autocompletion
 FIGNORE=pyc
 #ignore same inputs in history
-HISTIGNORE="cd*:exit:pwd:hostname:ls:history*:exit:clear"
+HISTIGNORE="cd*:exit:pwd:hostname:ls:exit:clear"
 HISTCONTROL="ignoreboth"
-HISTSIZE=10000
+HISTSIZE=100000
+HISTFILESIZE=100000
 HISTTIMEFORMAT='%F %T  '
 TERM=xterm-256color
 export EDITOR=vim
@@ -100,6 +102,7 @@ PATH=$PATH:/usr/local/Cellar/git/1.8.4/share/git-core/contrib/diff-highlight/
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PYTHONSTARTUP="$HOME/.pythonrc"
 
 source ~/configs/.bashrc_xterm
 source ~/.bashrc_secure
