@@ -23,11 +23,13 @@ alias wdiff="git diff --color-words --no-index"
 alias git='LC_ALL=C git'
 # Parallel is like xargs, except better
 alias xargs=parallel
+alias coverage=python-coverage
 
 # TODO: ssh agent
 # alias ssh-add='ssh-add -t 36000'
 
 alias rebuild_ycm='cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer'
+alias gitwho='for ref in $(git for-each-ref --sort=-committerdate --format="%(refname)" refs/remotes ); do git log -n1 $ref --pretty=format:"%Cgreen%cr%Creset %C(yellow)%d%Creset %C(bold blue)<%an&>%Creset%n" | cat ; done | awk '"'! a["'$0'"]++'";
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ \[\1\] $(parse_git_dirty)/"
