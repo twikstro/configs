@@ -216,7 +216,7 @@ nmap gV `[v`]
 " TODO: Use these
 nmap ä .
 nmap ö .
-nmap å .
+map å :e#<Cr>
 nmap ' .
 nmap - .
 

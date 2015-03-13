@@ -24,12 +24,14 @@ alias git='LC_ALL=C git'
 # Parallel is like xargs, except better
 alias xargs=parallel
 alias coverage=python-coverage
+alias activity='pushd ~/git; for repo in csi_test_tools csi_infrarecipes gitolite-admin; do echo $repo; cd $repo; git checkout master >/dev/null 2>&1; git pull --rebase >/dev/null 2>&1; git log --date=relative -n5 --pretty=format:"%<|(16)%an %Cred%<|(32)%ad%Creset %s"; cd ..; done; popd'
 
 # TODO: ssh agent
 # alias ssh-add='ssh-add -t 36000'
 
 alias rebuild_ycm='cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer'
-alias gitwho='for ref in $(git for-each-ref --sort=-committerdate --format="%(refname)" refs/remotes ); do git log -n1 $ref --pretty=format:"%Cgreen%cr%Creset %C(yellow)%d%Creset %C(bold blue)<%an&>%Creset%n" | cat ; done | awk '"'! a["'$0'"]++'";
+alias gitwho='for ref in $(git for-each-ref --sort=-committerdate --format="%(refname)" refs/remotes ); do git log -n1 $ref --pretty=format:"%Cgreen%cr%Creset %C(yellow)%d%Creset %C(bold blue)<%an>%Creset%n" | cat ; done | awk '"'! a["'$0'"]++'";
+
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ \[\1\] $(parse_git_dirty)/"
@@ -50,7 +52,7 @@ setPrompt() {
     # Directory and Git-branch
     local PROMPT_1="${BLUE_FG}\w${BRANCH_COLOR}\$(parse_git_branch)\n"
     # Username and hostname
-    local PROMPT_2="${DEFAULT_FG}[${GREEN_FG}\u${DEFAULT_FG}@${GREEN_FG}localhost${DEFAULT_FG}]\n"
+    local PROMPT_2="${DEFAULT_FG}[${GREEN_FG}\u${DEFAULT_FG}@${GREEN_FG}linux-ws${DEFAULT_FG}]\n"
     # Line for new input
     local PROMPT_3="> "
     export PS1="${PROMPT_1}${PROMPT_2}${PROMPT_3}"
@@ -108,3 +110,8 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 
 source ~/configs/.bashrc_xterm
 source ~/.bashrc_secure
+
+export http_proxy=$HTTP_PROXY
+export NO_PROXY="/var/run/docker.sock"
+
+export HOST_SERVERS="dogmatix fulliautomatix gridster hatscm hillomunkki hipster idefix kcecpuvmhost1 kcecpuvmhost2 kittyhawk klab krmdev lioster minister mobster monster obelix prankster pullapitko roswell trickster tsdop"
