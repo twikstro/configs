@@ -7,7 +7,7 @@
 "--------------------------------------------------------------
 
 " These are for Vundle
-set nocompatible        " Do not act overly VI-compatible
+"set nocompatible        " Do not act overly VI-compatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -259,7 +259,7 @@ let @o = "0v$h\"lyy:tabdo exe 'g/' . @l . '/d'"
 "--------------------------------------------------------------
 
 " CtrlP
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.pyc
 
 " Syntastic
 " Use pylint for python
@@ -269,6 +269,7 @@ let g:syntastic_python_checker_args = '--rcfile=~/.pylintrc'
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_highlighting = 1
+let g:syntastic_always_populate_loc_list = 1
 " Todo: Do i want to use this
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 " Had let g:syntastic_quiet_warnings=0, maybe the one below needs some
