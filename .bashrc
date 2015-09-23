@@ -59,8 +59,6 @@ setPrompt() {
 }
 setPrompt
 
-#complete -C /usr/share/java/ant-1.8.4/bin/complete-ant-cmd.pl ant
-. /etc/bash_completion
 
 # Ignore .pyc files in filename autocompletion
 FIGNORE=pyc
@@ -76,7 +74,7 @@ export SVN_EDITOR=vim
 export GIT_EDITOR=vim
 # alias vim=/usr/bin/vim
 # My vim croquet experiment
-alias vim='/usr/bin/vim -w ~/.vimlog "$@"'
+alias vim='$(which vim) -w ~/.vimlog "$@"'
 # export => seen in env, no export => seen in set
 export ACK_PAGER_COLOR="less -R"
 export ANT_HOME=/Users/twikstro/Tools/ant
@@ -96,22 +94,17 @@ export ANT_OPTS="-Xmx4048M -Xms2024M -XX:PermSize=512M -XX:MaxPermSize=1024M"
 export LS_COLORS='di=36:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:*.deb=90'
 PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
-PATH=/usr/locar/bin:$PATH
+PATH=/usr/local/bin:$PATH
 # Apache Ant binaries
 PATH=$PATH:$ANT_HOME/bin
 # Local tools
 PATH=$PATH:$HOME/Tools/bin
-# TODO?  Adding this due to complaint of missing diff-highlight command
-PATH=$PATH:/usr/local/Cellar/git/1.8.4/share/git-core/contrib/diff-highlight/
-
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
-source ~/configs/.bashrc_xterm
-source ~/.bashrc_secure
-
 export http_proxy=$HTTP_PROXY
 export NO_PROXY="/var/run/docker.sock"
 
-export HOST_SERVERS="dogmatix fulliautomatix gridster hatscm hillomunkki hipster idefix kcecpuvmhost1 kcecpuvmhost2 kittyhawk klab krmdev lioster minister mobster monster obelix prankster pullapitko roswell trickster tsdop"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+
