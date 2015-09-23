@@ -9,7 +9,7 @@
 " These are for Vundle
 "set nocompatible        " Do not act overly VI-compatible
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 syntax on		            " Highlight syntax
