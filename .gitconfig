@@ -15,8 +15,6 @@
 	added = green
 	untracked = red
 	changed = cyan
-[core]
-	excludesfile = /home/fintwikstro/.gitignore
 [push]
 	default = current
 [http]

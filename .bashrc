@@ -24,7 +24,6 @@ alias git='LC_ALL=C git'
 # Parallel is like xargs, except better
 alias xargs=parallel
 alias coverage=python-coverage
-alias activity='pushd ~/git; for repo in csi_test_tools csi_infrarecipes gitolite-admin; do echo $repo; cd $repo; git checkout master >/dev/null 2>&1; git pull --rebase >/dev/null 2>&1; git log --date=relative -n5 --pretty=format:"%<|(16)%an %Cred%<|(32)%ad%Creset %s"; cd ..; done; popd'
 
 # TODO: ssh agent
 # alias ssh-add='ssh-add -t 36000'
