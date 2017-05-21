@@ -1,6 +1,6 @@
 [user]
 	name = Tim Wikstrom
-	email = twikstro@gmail.com
+	email = -
 [alias]
     st = status
     ci = commit -v
